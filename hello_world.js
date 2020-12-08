@@ -4,6 +4,7 @@
 let datafire = require('datafire');
 
 // Create a new Action.
+let github = require('@datafire/github').actions;
 module.exports = new datafire.Action({
   description: "Greets the user.",
   inputs: [{
@@ -12,7 +13,8 @@ module.exports = new datafire.Action({
     maxLength: 100,
     default: "world"
   }],
-  handler: input => {
-    return "Hello, " + input.name;
+  handler: async (input, context) => {
+    let gists = await github.gists.get({}, context);
+    return gists;
   },
 });
